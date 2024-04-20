@@ -21,18 +21,26 @@ class Ball{
             this.x += this.xVel*this.speed;
             this.y += this.yVel*this.speed;
 
-            // TODO idle upgrade: if y is less than 0, just make the ball move slower
-            // if the ball touches the top or down boundary of the screen
             if(this.y < 0 || this.y > height-this.r) {
                 if(this.y > height-this.r) {
-                    this.alive = false;
+                    if(killBall){
+                        this.alive = false;
+                    }
+                    this.y = height-this.r;
+                }else{
+                    this.y = 0;
                 }
-                this.yVel *= -1.2;
+                this.yVel *= -ballAcceleration;
             }
             
             // If it touched the left or right boundaries
             if(this.x < 0 || this.x > width-this.r) {
-                this.xVel *= -1.2;
+                this.xVel *= -ballAcceleration;
+                if(this.x < 0) {
+                    this.x = 0;
+                }else{
+                    this.x = width-this.r;
+                }
             }
 
             if (this.isCollidingWithPlayer()) {
@@ -53,6 +61,8 @@ class Ball{
             }
 
             this.speed += 0.001;
+            this.xVel = min(this.xVel, ballMaxSpeedCap);
+            this.yVel = min(this.yVel, ballMaxSpeedCap);
         }
     }
 

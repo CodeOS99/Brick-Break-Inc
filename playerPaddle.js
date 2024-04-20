@@ -3,7 +3,7 @@ class PlayerPaddle{
         this.x = width / 2;
         this.y = 500;
 
-        this.w = 200;
+        this.w = 50;
         this.h = 20;
     }
 
